@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/hrrydgls/snug/handlers"
+	"github.com/hrrydgls/snug/handlers/auth"
 )
 
 func main () {
@@ -27,6 +28,8 @@ func main () {
 	mux.HandleFunc("/", handlers.HomeHandler)
 
 	mux.HandleFunc("/about", handlers.AboutHandler)
+
+	mux.HandleFunc("/auth/email", auth.Email)
 
 	mux.HandleFunc("/login", handlers.LoginHandler)
 
