@@ -1,6 +1,6 @@
 include .env
 
-MIGRATE=migrate -path db/migrations -database "$(DB_URL)"
+MIGRATE=migrate -path db/migrations -database "$(DB_DSN)"
 
 migrate-up:
 	$(MIGRATE) up

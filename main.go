@@ -1,13 +1,15 @@
 package main
 
 import (
-	"net/http"
-	"github.com/joho/godotenv"
 	"log"
+	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 
 	"github.com/hrrydgls/snug/handlers"
 	"github.com/hrrydgls/snug/handlers/auth"
+	"github.com/hrrydgls/snug/middlewares"
 )
 
 func main () {
@@ -33,6 +35,6 @@ func main () {
 
 	mux.HandleFunc("/login", handlers.LoginHandler)
 
-	log.Fatal(http.ListenAndServe(":"+port, mux))
+	log.Fatal(http.ListenAndServe(":"+port, middlewares.RecoveryMiddleware(mux)))
 
 }
