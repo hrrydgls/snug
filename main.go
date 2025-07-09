@@ -7,34 +7,27 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"github.com/hrrydgls/snug/handlers"
-	"github.com/hrrydgls/snug/handlers/auth"
+	"github.com/hrrydgls/snug/routes"
 	"github.com/hrrydgls/snug/middlewares"
 )
 
-func main () {
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+func main() {
+	loadEnv()
 
 	port := os.Getenv("APP_PORT")
 	if port == "" {
 		port = "8888"
 	}
 
+	router := routes.SetupRoutes()
+	handler := middlewares.RecoveryMiddleware(router)
 
-	mux := http.NewServeMux()
+	log.Printf("Server is running on port %s...", port)
+	log.Fatal(http.ListenAndServe(":"+port, handler))
+}
 
-	mux.HandleFunc("/", handlers.HomeHandler)
-
-	mux.HandleFunc("/about", handlers.AboutHandler)
-
-	mux.HandleFunc("/auth/email", auth.Email)
-
-	mux.HandleFunc("/login", handlers.LoginHandler)
-
-	log.Fatal(http.ListenAndServe(":"+port, middlewares.RecoveryMiddleware(mux)))
-
+func loadEnv() {
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using system env variables")
+	}
 }
