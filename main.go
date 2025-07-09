@@ -7,8 +7,9 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"github.com/hrrydgls/snug/routes"
+	"github.com/hrrydgls/snug/db"
 	"github.com/hrrydgls/snug/middlewares"
+	"github.com/hrrydgls/snug/routes"
 )
 
 func main() {
@@ -19,10 +20,14 @@ func main() {
 		port = "8888"
 	}
 
-	router := routes.SetupRoutes()
+	appEnv := os.Getenv("APP_ENV")
+
+	database := db.Connect()
+
+	router := routes.SetupRoutes(database)
 	handler := middlewares.RecoveryMiddleware(router)
 
-	log.Printf("Server is running on port %s...", port)
+	log.Printf("Server is running on port '%s' and the env is '%s'", port, appEnv)
 	log.Fatal(http.ListenAndServe(":"+port, handler))
 }
 

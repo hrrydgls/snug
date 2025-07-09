@@ -5,14 +5,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/hrrydgls/snug/db"
 	"github.com/hrrydgls/snug/exceptions"
 	"github.com/hrrydgls/snug/models"
 	"github.com/hrrydgls/snug/models/responses"
 	"gorm.io/gorm"
 )
 
-func Email(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) Email(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
@@ -23,7 +22,7 @@ func Email(w http.ResponseWriter, r *http.Request) {
 		panic(exceptions.Unprocessable("Email is required!"))
 	}
 
-	db := db.Connect()
+	db := h.DB
 
 	var user models.User
 
@@ -34,7 +33,6 @@ func Email(w http.ResponseWriter, r *http.Request) {
 			Message: "User is already exist.",
 			Result:  "exist",
 		})
-
 	} else if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 
 		newUser := models.User{
