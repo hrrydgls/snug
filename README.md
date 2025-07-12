@@ -16,7 +16,7 @@ I am using a docker compose file for deploy a db and expose port to my host mach
 | [`net/http`](https://pkg.go.dev/net/http)           | Building HTTP server, routes, and middleware.              |
 | [`encoding/json`](https://pkg.go.dev/encoding/json) | Marshaling/unmarshaling JSON payloads.                     |
 | [`errors`](https://pkg.go.dev/errors)               | Working with Go error types and error comparisons.         |
-| [`errors`](https://pkg.go.dev/net/mail)             | Package mail implements parsing of mail messages.          |
+| [`mail`](https://pkg.go.dev/net/mail)               | Package mail implements parsing of mail messages.          |
 
 ---
 
