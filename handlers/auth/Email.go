@@ -13,8 +13,6 @@ import (
 
 func (h *Handler) Email(w http.ResponseWriter, r *http.Request) {
 
-	w.Header().Set("Content-Type", "application/json")
-
 	r.ParseForm()
 	email := r.FormValue("email")
 

@@ -17,6 +17,7 @@ func SetupRoutes(db *gorm.DB) *http.ServeMux {
 	mux.HandleFunc("/", handlers.HomeHandler)
 	mux.HandleFunc("/about", handlers.AboutHandler)
 	mux.HandleFunc("/auth/email", authHandler.Email)
+	mux.HandleFunc("/auth/register", authHandler.Register)
 	mux.HandleFunc("/login", handlers.LoginHandler)
 
 	return mux
